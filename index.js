@@ -8,11 +8,14 @@ const mongoose = require('mongoose');
 const port = process.env.PORT || 3000;
 
 app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded());
 
 app.get('/', async (req,res,next)=>{
   await mongoose.connect('mongodb://localhost:27017/short_url')
   
 })
+app.use(require('./routes/api.js'));
 
 app.use('/public', express.static(`${process.cwd()}/public`));
 
