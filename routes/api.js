@@ -1,4 +1,4 @@
-import Url from '../models/models';
+const  Url = require('../models/models');
 const router = require('express').Router;
 const { v4: uuid }= require('uuid');
 const validUrl = require('valid-url');
@@ -20,3 +20,10 @@ router.post('/',(req,res)=>{
    })
     
 });
+router.get('/<short_url>',(req,res)=>{
+    const {short_url} = req.params;
+    const original_url = newUrl.findOne({short_url},(error,url)=>{
+        if(error)res.json('URL not found in database');
+        res.redirect(url.original_url);
+    })
+})
